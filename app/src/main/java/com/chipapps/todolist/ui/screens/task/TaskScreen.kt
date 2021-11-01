@@ -2,13 +2,14 @@ package com.chipapps.todolist.ui.screens.task
 
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import com.chipapps.todolist.data.models.ToDoTask
 import com.chipapps.todolist.util.Action
 
 @Composable
-fun TaskScreen(navigateToListScreen: (Action) -> Unit){
+fun TaskScreen(selectedTask: ToDoTask?, navigateToListScreen: (Action) -> Unit) {
     Scaffold(
         topBar = {
-            TaskAppBar(navigateToListScreen = navigateToListScreen)
+            TaskAppBar(navigateToListScreen = navigateToListScreen, selectedTask = selectedTask)
         },
         content = {}
     )
