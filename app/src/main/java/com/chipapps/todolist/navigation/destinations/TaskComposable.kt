@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.chipapps.todolist.ui.screens.task.TaskScreen
 import com.chipapps.todolist.util.Action
 import com.chipapps.todolist.util.Constants
 import com.chipapps.todolist.util.Constants.TASK_ARGUMENT_KEY
@@ -20,5 +21,7 @@ fun NavGraphBuilder.taskComposable(
     ){ navBackStackEntry ->
         val taskId =  navBackStackEntry.arguments!!.getInt(TASK_ARGUMENT_KEY)
         Log.d("TaskComposable", taskId.toString())
+        
+        TaskScreen(navigateToListScreen = navigateToListScreen)
     }
 }
