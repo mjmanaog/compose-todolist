@@ -18,17 +18,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.chipapps.todolist.data.models.Priority
 import com.chipapps.todolist.data.models.ToDoTask
 import com.chipapps.todolist.ui.theme.*
+import com.chipapps.todolist.util.RequestState
 
 @ExperimentalMaterialApi
 @Composable
 fun ListContent(
-    tasks: List<ToDoTask>,
+    tasks: RequestState<List<ToDoTask>>,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if (tasks.isEmpty()){
-        EmptyContent()
-    }else{
-        DisplayTasks(tasks = tasks, navigateToTaskScreen = navigateToTaskScreen)
+    if (tasks is RequestState.Success){
+        if (tasks.data.isEmpty()){
+            EmptyContent()
+        }else{
+            DisplayTasks(tasks = tasks.data, navigateToTaskScreen = navigateToTaskScreen)
+        }
     }
 }
 
