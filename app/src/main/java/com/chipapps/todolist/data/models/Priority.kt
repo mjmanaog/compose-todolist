@@ -6,7 +6,7 @@ import com.chipapps.todolist.ui.theme.LowPriorityColor
 import com.chipapps.todolist.ui.theme.MediumPriorityColor
 import com.chipapps.todolist.ui.theme.NonePriorityColor
 
-enum class Priority (color: Color) {
+enum class Priority (val color: Color) {
     HIGH(HighPriorityColor),
     MEDIUM(MediumPriorityColor),
     LOW(LowPriorityColor),
