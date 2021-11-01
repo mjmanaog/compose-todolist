@@ -26,16 +26,38 @@ import com.chipapps.todolist.R
 import com.chipapps.todolist.components.PriorityItem
 import com.chipapps.todolist.data.models.Priority
 import com.chipapps.todolist.ui.theme.*
+import com.chipapps.todolist.ui.viewmodels.SharedViewModel
+import com.chipapps.todolist.util.SearchAppBarState
+import com.chipapps.todolist.util.TrailingIconState
 
 @Composable
-fun ListAppBar() {
-//    DefaultListAppBar(
-//        onSearchClicked = {},
-//        onSortClicked = {},
-//        onDeleteClicked = {}
-//    )
+fun ListAppBar(
+    sharedViewModel: SharedViewModel,
+    searchAppBarState: SearchAppBarState,
+    searchTextState: String
+) {
+    when (searchAppBarState) {
+        SearchAppBarState.CLOSED -> {
+            DefaultListAppBar(
+                onSearchClicked = {
+                    sharedViewModel.searchAppBarState.value = SearchAppBarState.OPENED
+                },
+                onSortClicked = {},
+                onDeleteClicked = {}
+            )
+        }
+        else -> {
+            SearchAppBar(
+                text = searchTextState,
+                onTextChanged = { newText -> sharedViewModel.searchTextState.value = newText },
+                onCloseClicked = {
+                    sharedViewModel.searchAppBarState.value = SearchAppBarState.CLOSED
+                    sharedViewModel.searchTextState.value = ""
+                },
+                onSearchClicked = {})
+        }
+    }
 
-    SearchAppBar(text = "", {}, {}, {})
 }
 
 @Composable
@@ -74,7 +96,7 @@ fun ListAppBarActions(
 fun SearchAction(
     onSearchClicked: () -> Unit
 ) {
-    IconButton(onClick = { onSearchClicked }) {
+    IconButton(onClick = { onSearchClicked() }) {
         Icon(
             imageVector = Icons.Filled.Search,
             contentDescription = stringResource(id = R.string.search_action),
@@ -170,6 +192,8 @@ fun SearchAppBar(
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit
 ) {
+    var trailingIconState by remember { mutableStateOf(TrailingIconState.READY_TO_DELETE)}
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -210,7 +234,22 @@ fun SearchAppBar(
                 }
             },
             trailingIcon = {
-                IconButton(onClick = { onCloseClicked() }) {
+                IconButton(onClick = {
+                    when(trailingIconState){
+                        TrailingIconState.READY_TO_DELETE -> {
+                            onTextChanged("")
+                            trailingIconState = TrailingIconState.READY_TO_CLOSE
+                        }
+                        TrailingIconState.READY_TO_CLOSE -> {
+                            if(text.isNotEmpty()){
+                                onTextChanged("")
+                            }else{
+                                onCloseClicked()
+                                trailingIconState = TrailingIconState.READY_TO_DELETE
+                            }
+                        }
+                    }
+                }) {
                     Icon(
                         imageVector = Icons.Filled.Close,
                         contentDescription = stringResource(id = R.string.close_icon),
