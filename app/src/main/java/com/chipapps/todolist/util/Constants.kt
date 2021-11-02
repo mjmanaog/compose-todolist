@@ -9,9 +9,13 @@ object Constants {
 
     const val LIST_ARGUMENT_KEY = "action"
     const val TASK_ARGUMENT_KEY = "taskId"
+    const val SPLASH_SCREEN = "splash"
+
 
     const val MAX_TITLE_LENGTH = 20
 
     const val PREF_NAME = "todo_preferences"
     const val PREF_KEY = "sort_state"
+
+    const val SPLASH_DELAY = 2000L
 }

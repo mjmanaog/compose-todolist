@@ -7,9 +7,10 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.chipapps.todolist.navigation.destinations.listComposable
+import com.chipapps.todolist.navigation.destinations.splashComposable
 import com.chipapps.todolist.navigation.destinations.taskComposable
 import com.chipapps.todolist.ui.viewmodels.SharedViewModel
-import com.chipapps.todolist.util.Constants.LIST_SCREEN
+import com.chipapps.todolist.util.Constants.SPLASH_SCREEN
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -24,9 +25,10 @@ fun SetupNavigation(
 
     NavHost(
         navController = navHostController,
-        startDestination = LIST_SCREEN
+        startDestination = SPLASH_SCREEN
     ) {
-        listComposable(navigateToTaskScreen =  screen.task, sharedViewModel = sharedViewModel)
-        taskComposable(navigateToListScreen = screen.list, sharedViewModel = sharedViewModel)
+        splashComposable(navigateToListScreen = screen.splash)
+        listComposable(navigateToTaskScreen = screen.list, sharedViewModel = sharedViewModel)
+        taskComposable(navigateToListScreen = screen.task, sharedViewModel = sharedViewModel)
     }
 }

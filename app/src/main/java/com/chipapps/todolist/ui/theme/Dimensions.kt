@@ -14,3 +14,5 @@ val TOP_APP_BAR_HEIGHT = 56.dp
 val TASK_ITEM_ELEVATION = 2.dp
 
 val EMPTY_ICON = 120.dp
+
+val LOGO_HEIGHT = 100.dp

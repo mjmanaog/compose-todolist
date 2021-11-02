@@ -30,6 +30,7 @@
 
     <string name="delete_all_task">Remove all tasks?</string>
     <string name="delete_all_task_conf">Are you sure you want to remove all tasks?</string>
+    <string name="todo_logo">ToDo Logo</string>
 
 
 
