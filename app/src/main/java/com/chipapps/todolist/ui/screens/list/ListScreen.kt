@@ -26,6 +26,7 @@ fun ListScreen(
     val action by sharedViewModel.action
 
     val allTask by sharedViewModel.allTask.collectAsState() //to observe database
+    val searchedTasks by sharedViewModel.searchTasks.collectAsState() //to observe database
 
     val searchAppBarState: SearchAppBarState by sharedViewModel.searchAppBarState
     val searchTextState: String by sharedViewModel.searchTextState
@@ -53,7 +54,9 @@ fun ListScreen(
         },
         content = {
             ListContent(
-                tasks = allTask,
+                allTasks = allTask,
+                searchTasks = searchedTasks,
+                searchAppBarState = searchAppBarState,
                 navigateToTaskScreen = navigateToTaskScreen
             )
         },

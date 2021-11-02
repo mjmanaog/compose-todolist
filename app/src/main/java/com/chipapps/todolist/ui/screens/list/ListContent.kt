@@ -19,19 +19,38 @@ import com.chipapps.todolist.data.models.Priority
 import com.chipapps.todolist.data.models.ToDoTask
 import com.chipapps.todolist.ui.theme.*
 import com.chipapps.todolist.util.RequestState
+import com.chipapps.todolist.util.SearchAppBarState
 
 @ExperimentalMaterialApi
 @Composable
 fun ListContent(
-    tasks: RequestState<List<ToDoTask>>,
+    allTasks: RequestState<List<ToDoTask>>,
+    searchTasks: RequestState<List<ToDoTask>>,
+    searchAppBarState: SearchAppBarState,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if (tasks is RequestState.Success){
-        if (tasks.data.isEmpty()){
-            EmptyContent()
-        }else{
-            DisplayTasks(tasks = tasks.data, navigateToTaskScreen = navigateToTaskScreen)
+    if (searchAppBarState == SearchAppBarState.TRIGGERED) {
+        if (searchTasks is RequestState.Success) {
+            HandleListContent(tasks = searchTasks.data, navigateToTaskScreen = navigateToTaskScreen)
         }
+    } else {
+        if (allTasks is RequestState.Success) {
+            HandleListContent(tasks = allTasks.data, navigateToTaskScreen = navigateToTaskScreen)
+        }
+    }
+
+}
+
+@ExperimentalMaterialApi
+@Composable
+fun HandleListContent(
+    tasks: List<ToDoTask>,
+    navigateToTaskScreen: (taskId: Int) -> Unit
+) {
+    if (tasks.isEmpty()) {
+        EmptyContent()
+    } else {
+        DisplayTasks(tasks = tasks, navigateToTaskScreen = navigateToTaskScreen)
     }
 }
 

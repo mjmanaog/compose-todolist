@@ -54,7 +54,9 @@ fun ListAppBar(
                     sharedViewModel.searchAppBarState.value = SearchAppBarState.CLOSED
                     sharedViewModel.searchTextState.value = ""
                 },
-                onSearchClicked = {})
+                onSearchClicked = {
+                    sharedViewModel.searchTasks(searchQuery = it)
+                })
         }
     }
 
@@ -68,7 +70,10 @@ fun DefaultListAppBar(
 ) {
     TopAppBar(
         title = {
-            Text(text = stringResource(id = R.string.title_list_screen), color = MaterialTheme.colors.topAppBarContentColor)
+            Text(
+                text = stringResource(id = R.string.title_list_screen),
+                color = MaterialTheme.colors.topAppBarContentColor
+            )
         },
         actions = {
             ListAppBarActions(
@@ -192,7 +197,7 @@ fun SearchAppBar(
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit
 ) {
-    var trailingIconState by remember { mutableStateOf(TrailingIconState.READY_TO_DELETE)}
+    var trailingIconState by remember { mutableStateOf(TrailingIconState.READY_TO_DELETE) }
 
     Surface(
         modifier = Modifier
@@ -235,15 +240,15 @@ fun SearchAppBar(
             },
             trailingIcon = {
                 IconButton(onClick = {
-                    when(trailingIconState){
+                    when (trailingIconState) {
                         TrailingIconState.READY_TO_DELETE -> {
                             onTextChanged("")
                             trailingIconState = TrailingIconState.READY_TO_CLOSE
                         }
                         TrailingIconState.READY_TO_CLOSE -> {
-                            if(text.isNotEmpty()){
+                            if (text.isNotEmpty()) {
                                 onTextChanged("")
-                            }else{
+                            } else {
                                 onCloseClicked()
                                 trailingIconState = TrailingIconState.READY_TO_DELETE
                             }
