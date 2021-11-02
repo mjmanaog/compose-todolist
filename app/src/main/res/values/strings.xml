@@ -3,6 +3,8 @@
 
 
     <string name="title_list_screen"> Task </string>
+    <string name="title"> Title </string>
+    <string name="description"> Description </string>
 
     <string name="add_button">Add Button</string>
     <string name="search_action">Search Tasks</string>
