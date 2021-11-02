@@ -21,10 +21,14 @@ fun ListScreen(
         sharedViewModel.getAllTasks()
     }
 
+    val action by sharedViewModel.action
+
     val allTask by sharedViewModel.allTask.collectAsState() //to observe database
 
     val searchAppBarState: SearchAppBarState by sharedViewModel.searchAppBarState
     val searchTextState: String by sharedViewModel.searchTextState
+
+    sharedViewModel.handleDatabaseActions(action = action)
 
     Scaffold(
         topBar = {
