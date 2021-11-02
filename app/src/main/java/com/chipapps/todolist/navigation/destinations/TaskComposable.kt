@@ -1,5 +1,6 @@
 package com.chipapps.todolist.navigation.destinations
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
@@ -18,7 +19,7 @@ fun NavGraphBuilder.taskComposable(
 ) {
     composable(
         route = Constants.TASK_SCREEN,
-        arguments = listOf(navArgument(Constants.TASK_ARGUMENT_KEY) {
+        arguments = listOf(navArgument(TASK_ARGUMENT_KEY) {
             type = NavType.IntType
         })
     ) { navBackStackEntry ->
@@ -26,6 +27,14 @@ fun NavGraphBuilder.taskComposable(
         sharedViewModel.getSelectedTask(taskId = taskId)
         val selectedTask by sharedViewModel.selectedTask.collectAsState()
 
-        TaskScreen(navigateToListScreen = navigateToListScreen, selectedTask = selectedTask)
+        LaunchedEffect(key1 = taskId){
+            sharedViewModel.updateTaskFields(selectedTask = selectedTask)
+        }
+
+        TaskScreen(
+            sharedViewModel = sharedViewModel,
+            navigateToListScreen = navigateToListScreen,
+            selectedTask = selectedTask
+        )
     }
 }
