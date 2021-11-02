@@ -26,18 +26,37 @@ import com.chipapps.todolist.util.SearchAppBarState
 fun ListContent(
     allTasks: RequestState<List<ToDoTask>>,
     searchTasks: RequestState<List<ToDoTask>>,
+    lowPriorityTasks: List<ToDoTask>,
+    highPriorityTasks: List<ToDoTask>,
+    sortState: RequestState<Priority>,
     searchAppBarState: SearchAppBarState,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if (searchAppBarState == SearchAppBarState.TRIGGERED) {
-        if (searchTasks is RequestState.Success) {
-            HandleListContent(tasks = searchTasks.data, navigateToTaskScreen = navigateToTaskScreen)
+
+    if (sortState is RequestState.Success){
+        when{
+            searchAppBarState == SearchAppBarState.TRIGGERED ->{
+                if (searchTasks is RequestState.Success){
+                    HandleListContent(tasks = searchTasks.data, navigateToTaskScreen = navigateToTaskScreen)
+                }
+            }
+            sortState.data == Priority.NONE ->{
+                if (allTasks is RequestState.Success){
+                    HandleListContent(tasks = allTasks.data, navigateToTaskScreen = navigateToTaskScreen)
+                }
+            }
+            sortState.data == Priority.LOW ->{
+                HandleListContent(tasks = lowPriorityTasks, navigateToTaskScreen = navigateToTaskScreen)
+            }
+            sortState.data == Priority.HIGH ->{
+                HandleListContent(tasks = highPriorityTasks, navigateToTaskScreen = navigateToTaskScreen)
+            }
         }
-    } else {
-        if (allTasks is RequestState.Success) {
-            HandleListContent(tasks = allTasks.data, navigateToTaskScreen = navigateToTaskScreen)
-        }
+
+
+
     }
+
 
 }
 

@@ -21,6 +21,7 @@ fun ListScreen(
 ) {
     LaunchedEffect(key1 = true) {
         sharedViewModel.getAllTasks()
+        sharedViewModel.readSortState()
     }
 
     val action by sharedViewModel.action
@@ -32,6 +33,10 @@ fun ListScreen(
     val searchTextState: String by sharedViewModel.searchTextState
 
     val scaffoldState = rememberScaffoldState()
+
+    val sortState by sharedViewModel.sortState.collectAsState()
+    val lowPriorityTasks by sharedViewModel.lowPriorityTasks.collectAsState()
+    val highPriorityTasks by sharedViewModel.highPriorityTasks.collectAsState()
 
     DisplaySnackBar(
         scaffoldState = scaffoldState,
@@ -57,7 +62,10 @@ fun ListScreen(
                 allTasks = allTask,
                 searchTasks = searchedTasks,
                 searchAppBarState = searchAppBarState,
-                navigateToTaskScreen = navigateToTaskScreen
+                navigateToTaskScreen = navigateToTaskScreen,
+                lowPriorityTasks = lowPriorityTasks,
+                highPriorityTasks = highPriorityTasks,
+                sortState = sortState
             )
         },
         floatingActionButton = {
@@ -113,8 +121,8 @@ fun DisplaySnackBar(
 
 private fun setSnackbarMessage(
     action: Action, taskTitle: String
-): String{
-    return when (action){
+): String {
+    return when (action) {
         Action.DELETE_ALL -> "All Tasks Removed."
         else -> "${action.name}: $taskTitle"
     }
