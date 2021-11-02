@@ -11,6 +11,7 @@ import com.chipapps.todolist.data.models.Priority
 import com.chipapps.todolist.util.Constants.PREF_KEY
 import com.chipapps.todolist.util.Constants.PREF_NAME
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -19,6 +20,7 @@ import javax.inject.Inject
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREF_NAME)
 
+@ViewModelScoped
 class DataStoreRepository @Inject constructor(
     @ApplicationContext private val context: Context
 ){
