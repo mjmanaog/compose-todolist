@@ -28,4 +28,9 @@
     <string name="delete_task_conf">Are you sure you want to remove \'%1$s\'?</string>
 
 
+    <string name="delete_all_task">Remove all tasks?</string>
+    <string name="delete_all_task_conf">Are you sure you want to remove all tasks?</string>
+
+
+
 </resources>
