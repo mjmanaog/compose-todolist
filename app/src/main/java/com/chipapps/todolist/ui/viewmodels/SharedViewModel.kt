@@ -4,6 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chipapps.todolist.data.models.Priority
 import com.chipapps.todolist.data.models.ToDoTask
 import com.chipapps.todolist.data.repositories.ToDoRepository
@@ -97,13 +98,25 @@ class SharedViewModel @Inject constructor(
         }
     }
 
+    private fun updateTask(){
+        viewModelScope.launch (Dispatchers.IO){
+            val toDoTask = ToDoTask(
+                id = id.value,
+                title = title.value,
+                description = description.value,
+                priority = priority.value
+            )
+            repository.updateTask(toDoTask = toDoTask)
+        }
+    }
+
     fun handleDatabaseActions(action: Action){
         when(action){
             Action.ADD -> {
                 addTask()
             }
             Action.UPDATE -> {
-
+                updateTask()
             }
             Action.DELETE -> {
 
