@@ -22,5 +22,10 @@
     <string name="update_icon">Update Icon</string>
     <string name="drop_down_arrow">Drop-Down Arrow Icon</string>
 
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="delete_task">Remove \'%1$s\'?</string>
+    <string name="delete_task_conf">Are you sure you want to remove \'%1$s\'?</string>
+
 
 </resources>
